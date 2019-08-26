@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "awsnotelify",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authawsnotelify75a18f54",
+            "Outputs.UserPoolId"
+        ]
+    }
+}
