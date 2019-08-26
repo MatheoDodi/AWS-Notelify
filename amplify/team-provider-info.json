@@ -1,0 +1,14 @@
+{
+    "ampenv": {
+        "awscloudformation": {
+            "AuthRoleName": "aws-notelify-ampenv-20190825203037-authRole",
+            "UnauthRoleArn": "arn:aws:iam::267704306403:role/aws-notelify-ampenv-20190825203037-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::267704306403:role/aws-notelify-ampenv-20190825203037-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "aws-notelify-ampenv-20190825203037-deployment",
+            "UnauthRoleName": "aws-notelify-ampenv-20190825203037-unauthRole",
+            "StackName": "aws-notelify-ampenv-20190825203037",
+            "StackId": "arn:aws:cloudformation:us-east-1:267704306403:stack/aws-notelify-ampenv-20190825203037/df5ec6a0-c7b1-11e9-a45a-12d99c723360"
+        }
+    }
+}
