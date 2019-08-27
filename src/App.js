@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { withAuthenticator } from "aws-amplify-react";
 import { API, graphqlOperation } from "aws-amplify";
-import { createNote } from "./graphql/mutations";
+import { createNote, deleteNote } from "./graphql/mutations";
 import { listNotes } from "./graphql/queries";
 
 function App() {
   const [notes, setNotes] = useState([]);
   const [note, setNote] = useState("");
+  const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
     const getNotes = async () => {
@@ -21,14 +22,31 @@ function App() {
 
   const handleAddNote = async e => {
     e.preventDefault();
+    if (!updating) {
+      const input = {
+        note
+      };
+      const { data } = await API.graphql(
+        graphqlOperation(createNote, { input })
+      );
+      const newNote = data.createNote;
+      console.log(data);
+      setNotes([newNote, ...notes]);
+      setNote("");
+    } else {
+      // todo: add logic for updating note
+    }
+  };
+
+  const handleDeleteNote = async (e, noteId) => {
     const input = {
-      note
+      id: noteId
     };
-    const { data } = await API.graphql(graphqlOperation(createNote, { input }));
-    const newNote = data.createNote;
-    console.log(data);
-    setNotes([newNote, ...notes]);
-    setNote("");
+    const res = await API.graphql(graphqlOperation(deleteNote, { input }));
+    const deletedNoteId = res.data.deleteNote.id;
+
+    const filteredNotes = notes.filter(note => note.id !== deletedNoteId);
+    setNotes(filteredNotes);
   };
 
   return (
@@ -49,8 +67,16 @@ function App() {
       <div>
         {notes.map(note => (
           <div key={note.id} className="flex items-center">
-            <li className="list pa1 f3">{note.note}</li>
-            <button className="bg-transparent bn f4">
+            <li
+              className="list pa1 f3"
+              onClick={() => handleUpdateNote(note.id)}
+            >
+              {note.note}
+            </li>
+            <button
+              onClick={e => handleDeleteNote(e, note.id)}
+              className="bg-transparent bn f4"
+            >
               <span>&times;</span>
             </button>
           </div>
