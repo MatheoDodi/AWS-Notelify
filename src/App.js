@@ -9,12 +9,12 @@ function App() {
   const [note, setNote] = useState("");
   const [updatedNoteId, setUpdatedNoteId] = useState(null);
 
-  useEffect(() => {
-    const getNotes = async () => {
-      const { data } = await API.graphql(graphqlOperation(listNotes));
-      setNotes(data.listNotes.items);
-    };
+  const getNotes = async () => {
+    const { data } = await API.graphql(graphqlOperation(listNotes));
+    setNotes(data.listNotes.items);
+  };
 
+  useEffect(() => {
     getNotes();
   }, []);
 
@@ -30,7 +30,6 @@ function App() {
         graphqlOperation(createNote, { input })
       );
       const newNote = data.createNote;
-      console.log(data);
       setNotes([newNote, ...notes]);
       setNote("");
     } else {
@@ -38,9 +37,7 @@ function App() {
         note: note,
         id: updatedNoteId
       };
-      console.log(input);
       const res = await API.graphql(graphqlOperation(updateNote, { input }));
-      console.log(res);
       const updatedNote = res.data.updateNote;
 
       const updatedNotes = notes.map(item => {

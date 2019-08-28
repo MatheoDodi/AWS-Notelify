@@ -73,7 +73,7 @@ Contributions are what make the open source community such an amazing place to l
 
 ## What Did I Learn
 
-- Everything about Svelte.js!
+- All about AWS Amplify!
 
 <!-- CONTACT -->
 
